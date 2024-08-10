@@ -1,0 +1,269 @@
+/**
+ * Program that stores the name of a list
+ * and an ArrayList of Ellipsoid objects.
+ *
+ * Project 5
+ * @author Alyson Futral - CPSC 1210 - AO1
+ * @version 09/21/2023
+ */
+
+import java.util.ArrayList;
+import java.text.DecimalFormat;
+import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+
+/**
+ * Prints EllipsoidList.
+ */
+public class EllipsoidList {
+
+    private String nameOfList;
+    private ArrayList<Ellipsoid> eObj;
+
+    /**
+     * Prints Constructor.
+     * @param nameOfListIn used.
+     * @param eObjIn used.
+     */
+    public EllipsoidList(String nameOfListIn, ArrayList<Ellipsoid> eObjIn) {
+        nameOfList = nameOfListIn;
+        eObj = eObjIn; 
+    }
+
+    /**
+     * Prints String.
+     * @return used.
+     */
+    public String getName() {
+        return nameOfList;
+    }
+
+    /**
+     * Prints number of ellipsoids.
+     * @return used.
+     */
+    public int numberOfEllipsoids() {
+        if (eObj.size() == 0) {
+            return 0;
+        } else {
+            return eObj.size();
+        }
+    }
+
+    /**
+     * Prints total volume.
+     * @return used.
+     */
+    public double totalVolume() {
+        if (eObj.size() == 0) {
+            return 0;
+        }
+
+        double total = 0; 
+        int index = 0;
+
+        while (index < eObj.size()) {
+            total += eObj.get(index).volume();
+            index++;
+        }
+        return total;
+    }
+
+    /**
+     * Prints total surface area.
+     * @return used.
+     */
+    public double totalSurfaceArea() {
+        if (eObj.size() == 0) {
+            return 0;
+        }
+
+        double total = 0;
+        int index = 0;
+
+        while (index < eObj.size()) {
+            total += eObj.get(index).surfaceArea();
+            index++;
+        }
+        return total;
+    }
+
+    /**
+     * Prints total average volume.
+     * @return used.
+     */
+    public double averageVolume() {
+        if (eObj.size() == 0) {
+            return 0;
+        }
+
+        double total = 0;
+        int index = 0;
+
+        while (index < eObj.size()) {
+            total += eObj.get(index).volume();
+            index++;
+        }
+        double average = total / eObj.size();
+        return average;
+    }
+
+    /**
+     * Prints average surface area.
+     * @return used.
+     */
+    public double averageSurfaceArea() {
+        if (eObj.size() == 0) {
+            return 0;
+        }
+
+        double total = 0;
+        int index = 0;
+
+        while (index < eObj.size()) {
+            total += eObj.get(index).surfaceArea();
+            index++;
+        }
+        double average = total / eObj.size();
+        return average;
+    }
+
+    /**
+     * Prints String.
+     * @return used.
+     */
+    public String toString() {
+        String result = nameOfList + "\n";
+        int index = 0;
+
+        while (index < eObj.size()) {
+            result += "\n" + eObj.get(index) + "\n";
+            index++;
+        } 
+        return result;
+    }
+
+    /**
+     * Prints summary info.
+     * @return used.
+     */
+    public String summaryInfo() {
+        DecimalFormat df = new DecimalFormat("#,##0.0##");
+
+        String result = "";
+
+        result += "----- Summary for " + getName() + " -----";
+        result += "\nNumber of Ellipsoid Objects: " + numberOfEllipsoids();
+        result += "\nTotal Volume: " + df.format(totalVolume()) 
+                                    + " cubic units";
+        result += "\nTotal Surface Area: " + df.format(totalSurfaceArea()) 
+                                          + " square units";
+        result += "\nAverage Volume: " + df.format(averageVolume()) 
+                                      + " cubic units";
+        result += "\nAverage Surface Area: " + df.format(averageSurfaceArea()) 
+                                            + " square units";
+
+        return result; 
+    }
+
+    // ***************** NEW METHODS ****************
+
+    /**
+     * Prints ArrayList info.
+     * @return used.
+     */
+    public ArrayList<Ellipsoid> getList() {
+        return eObj;
+    }
+
+    /**
+     * Prints readFile info.
+     * @param fileNameIn used.
+     * @return used.
+     * @throws FileNotFoundException used.
+     */
+    public EllipsoidList readFile(String fileNameIn) throws FileNotFoundException {
+        Scanner scanFile = new Scanner(new File(fileNameIn));
+        ArrayList<Ellipsoid> eObjIn = new ArrayList<Ellipsoid>();
+        String list = "";
+
+        String nameOfListIn = scanFile.nextLine();
+
+        while (scanFile.hasNext()) {  
+            String label = scanFile.nextLine();
+            double a = Double.parseDouble(scanFile.nextLine()); 
+            double b = Double.parseDouble(scanFile.nextLine());
+            double c = Double.parseDouble(scanFile.nextLine());
+
+            Ellipsoid eSoid = new Ellipsoid(label, a, b, c);
+            eObj.add(eSoid);
+        }
+
+        EllipsoidList eSoid = new EllipsoidList(nameOfList, eObj);
+
+        return eSoid;
+    }
+
+    /**
+     * Prints addEllipsoid info.
+     * @param labelIn used.
+     * @param aIn used.
+     * @param bIn used.
+     * @param cIn used.
+     */
+    public void addEllipsoid(String labelIn, double aIn, double bIn, double cIn) {
+        Ellipsoid eSoid = new Ellipsoid(labelIn, aIn, bIn, cIn);
+        eObj.add(eSoid);
+    }
+
+    /**
+     * Prints summary info.
+     * @param label used.
+     * @return used.
+     */
+    public Ellipsoid findEllipsoid(String label) {
+        for (Ellipsoid eSoid : eObj) {
+            if (eSoid.getLabel().equalsIgnoreCase(label)) {
+                return eSoid;
+            }
+        }
+        return null;
+    }
+
+    /**
+     * Prints summary info.
+     * @param label used.
+     * @return used.
+     */
+    public Ellipsoid deleteEllipsoid(String label) {
+        int index = 0;
+        for (Ellipsoid eSoid : eObj) {
+            if (eSoid.getLabel().equalsIgnoreCase(label)) {
+                break;
+            }
+        }
+
+        if (findEllipsoid(label) == null) {
+            return null;
+        }     
+        return null;
+    }
+
+    /**
+     * Prints summary info.
+     * @param label used.
+     * @param a used.
+     * @param b used.
+     * @param c used.
+     * @return used.
+     */
+    public Ellipsoid editEllipsoid(String label, double a, double b, double c) {
+        for (Ellipsoid eSoid : eObj) {
+            if (eSoid.getLabel().equalsIgnoreCase(label)) {
+                return eSoid;
+            }
+        }
+        return null;
+    }
+}
