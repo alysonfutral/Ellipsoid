@@ -1,0 +1,60 @@
+/**
+ * 100% CORRECT
+ * Program that defines Ellipsoid objects.
+ *
+ * Project 4
+ * @author Alyson Futral - CPSC 1210 - AO1
+ * @version 09/17/2023
+ */
+
+import java.text.DecimalFormat;
+
+/**
+ * Prints Ellipsoid class.
+ *
+ */
+public class Ellipsoid { //fields are private
+
+    private String label = "";
+    private double a = 0;
+    private double b = 0;
+    private double c = 0;
+
+    /**
+     * Constructor is used.
+     * @param labelIn used.
+     * @param aIn used.
+     * @param bIn used.
+     * @param cIn used.
+     */
+    public Ellipsoid(String labelIn, double aIn, double bIn, 
+           double cIn) { //constructor is here
+       setLabel(labelIn); 
+       setA(aIn);
+       setB(bIn);
+       setC(cIn);
+    }
+    
+    /** 
+    * Use UserInfo.java as example for method.
+    * Method starts here, follow methods in project outline.
+    * @return tag
+    */
+    public String getLabel() {
+       return label;
+    }
+
+    /**
+    * boolean method.
+    * @return used.
+    * @param labelIn used.
+    */
+    public boolean setLabel(String labelIn) {
+       if (labelIn != null) { //"not null" and trimmed
+          label = labelIn.trim();
+          return true;
+       }
+       else {
+          return false;
+       }
+ 
