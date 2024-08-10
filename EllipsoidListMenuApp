@@ -1,0 +1,109 @@
+/**
+ * Program that stores the name of list
+ * and an ArrayList of Ellipsoid objects.
+ *
+ * Project 5
+ * @author Alyson Futral - CPSC 1210 - AO1
+ * @version 09/21/2023
+ */
+
+import java.util.Scanner;
+import java.util.ArrayList;
+import java.io.FileNotFoundException;
+
+/**
+ * Prints EllipsoidListApp.
+ */
+public class EllipsoidListMenuApp { //review 
+
+    /**
+    * Main method used, file not found exception.
+    * @param args used.
+    * @throws FileNotFoundException used.
+    */
+    public static void main(String[] args) throws FileNotFoundException {
+    
+       String list = "*** no list name assigned ***";
+       ArrayList<Ellipsoid> eObj = new ArrayList<Ellipsoid>();
+       EllipsoidList eList = new EllipsoidList(list, eObj);
+       String fileName = "no file name";
+       String code = "";
+       
+       Scanner scanFile = new Scanner(System.in);
+       
+       System.out.println("Ellipsoid List System Menu\n"
+                        + "R - Read File and Create Ellipsoid List\n"
+                        + "P - Print Ellipsoid List\n" 
+                        + "S - Print Summary\n"
+                        + "A - Add Ellipsoid\n"   
+                        + "D - Delete Ellipsoid\n"   
+                        + "F - Find Ellipsoid\n"
+                        + "E - Edit Ellipsoid\n"
+                        + "Q - Quit");
+                        
+       do {
+          System.out.print("Enter Code [R, P, S, A, D, F, E, or Q]: ");
+          code = scanFile.nextLine();
+          if (code.length() == 0) {
+             continue; }
+             
+          code = code.toUpperCase();
+          char codeChar = code.charAt(0);
+             
+          switch (codeChar) {
+          
+             case 'R': // Read in File
+                System.out.print("\tFile Name: ");
+                fileName = scanFile.nextLine();
+                
+                eList = eList.readFile(fileName);
+             
+                System.out.println("\tFile read in and "
+                               + "Ellipsoid List created\n");
+                break; 
+                
+             case 'P': // print list
+                System.out.println(eList);
+                break;
+                
+             case 'S': //print summary
+                System.out.println(eList.summaryInfo());
+                break;
+                
+             case 'A': //add ellipsoid
+                System.out.println("\tlabel: ");
+                String label = scanFile.nextLine();
+                System.out.println("\ta: ");
+                double a = Double.parseDouble(scanFile.nextLine());
+                System.out.println("\tb: ");
+                double b = Double.parseDouble(scanFile.nextLine());
+                System.out.println("\tc: ");
+                double c = Double.parseDouble(scanFile.nextLine());
+                
+                eList.addEllipsoid(label, a, b, c);
+                System.out.println("*** Ellipsoid added ***");
+                break;
+          
+             case 'D': 
+                break;   
+                
+             case 'F':
+                System.out.println("\tlabel: ");
+                label = scanFile.nextLine();
+             
+                break;   
+                
+             case 'E':
+                break;   
+                   
+             case 'Q': // Quit
+                break;
+                
+             default:  // no match, loop again
+                break; 
+          }
+       
+       } while (!code.equalsIgnoreCase("Q"));  
+    
+    } 
+}
