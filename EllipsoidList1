@@ -1,0 +1,167 @@
+/**
+ *
+ * Program that stores the name of list
+ * and an ArrayList of Ellipsoid objects.
+ *
+ * Project 5
+ * @author Alyson Futral - CPSC 1210 - AO1
+ * @version 09/21/2023
+ */
+
+import java.util.ArrayList;
+import java.text.DecimalFormat;
+
+/**
+ * Prints EllipsoidList.
+ *
+ */
+public class EllipsoidList {
+    
+    private String nameOfList; // 2 fields
+    private ArrayList<Ellipsoid> eObj;
+    
+    /**
+     * Constructor.
+     * @param nameOfListIn used.
+     * @param eObjIn used.
+     */
+    public EllipsoidList(String nameOfListIn, ArrayList<Ellipsoid> eObjIn) {
+    
+       nameOfList = nameOfListIn;
+       eObj = eObjIn; 
+    }   
+    
+    /**
+     * Gets the name of the list.
+     * @return nameOfList.
+     */
+    public String getName() {
+       return nameOfList;
+    }
+    
+    /**
+     * Returns the number of ellipsoids.
+     * @return number of ellipsoids.
+     */
+    public int numberOfEllipsoids() {
+       if (eObj.size() == 0) {
+          return 0;
+       } else {
+          return eObj.size();
+       }
+    }
+    
+    /**
+     * Calculates the total volume.
+     * @return total volume.
+     */
+    public double totalVolume() {
+       if (eObj.size() == 0) {
+          return 0;
+       }
+    
+       double total = 0; 
+       int index = 0; 
+    
+       while (index < eObj.size()) {
+          total += eObj.get(index).volume(); 
+          index++;
+       }
+       return total;
+    }
+    
+    /**
+     * Calculates the total surface area.
+     * @return total surface area.
+     */
+    public double totalSurfaceArea() {
+       if (eObj.size() == 0) {
+          return 0;
+       }
+    
+       double total = 0;
+       int index = 0;
+       
+       while (index < eObj.size()) {
+          total += eObj.get(index).surfaceArea();
+          index++;
+       }
+       return total;
+    }
+    
+    /**
+     * Calculates the average volume.
+     * @return average volume.
+     */
+    public double averageVolume() {
+       if (eObj.size() == 0) {
+          return 0;
+       }
+    
+       double total = 0;
+       int index = 0;
+       
+       while (index < eObj.size()) {
+          total += eObj.get(index).volume(); // sum
+          index++;
+       }
+       double average = total / eObj.size(); // average = sum/count
+       return average;
+    }
+    
+    /**
+     * Calculates the average surface area.
+     * @return average surface area.
+     */
+    public double averageSurfaceArea() {
+       if (eObj.size() == 0) {
+          return 0;
+       }
+    
+       double total = 0;
+       int index = 0;
+       
+       while (index < eObj.size()) {
+          total += eObj.get(index).surfaceArea(); // sum
+          index++;
+       }
+       double average = total / eObj.size();
+       return average;
+    }
+    
+    /**
+     * Converts the Ellipsoid list to a string.
+     * @return the list as a string.
+     */
+    public String toString() {
+       String result = nameOfList + "\n";
+       int index = 0;
+    
+       while (index < eObj.size()) {
+          result += "\n" + eObj.get(index) + "\n";
+          index++;
+       } 
+       return result;
+    }
+       
+    /**
+     * Returns a summary of the Ellipsoid list.
+     * @return summary information.
+     */
+    public String summaryInfo() {
+       DecimalFormat df = new DecimalFormat("#,##0.0##");
+    
+       String result = "";
+       result += "----- Summary for " + getName() + " -----";
+       result += "\nNumber of Ellipsoid Objects: " + numberOfEllipsoids();
+       result += "\nTotal Volume: " + df.format(totalVolume()) 
+                                    + " cubic units";
+       result += "\nTotal Surface Area: " + df.format(totalSurfaceArea()) 
+                                          + " square units";
+       result += "\nAverage Volume: " + df.format(averageVolume()) 
+                                      + " cubic units";
+       result += "\nAverage Surface Area: " + df.format(averageSurfaceArea()) 
+                                            + " square units";
+       return result; 
+    }
+}
